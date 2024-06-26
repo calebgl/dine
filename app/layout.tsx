@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Separator } from "@/components/ui/separator";
+import NavLink from "@/components/nav-link";
+import { randomUUID } from "node:crypto";
+import { House, LayoutGrid, ReceiptText } from "lucide-react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,9 +18,47 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const links = [
+    { id: randomUUID(), name: "home", icon: House, path: "/" },
+    { id: randomUUID(), name: "explore", icon: LayoutGrid, path: "/explore" },
+    { id: randomUUID(), name: "orders", icon: ReceiptText, path: "/orders" },
+  ];
+
+  const Links = links.map((link) => (
+    <NavLink href={link.path} key={link.id}>
+      <div className="flex gap-2 items-center">
+        <link.icon strokeWidth={1.5} />
+        {link.name}
+      </div>
+    </NavLink>
+  ));
+
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <div className="flex h-dvh">
+          <section className="basis-1/5 grid gap-4">
+            <header className="space-y-2">
+              <h1>Dine!</h1>
+            </header>
+            <Separator />
+            <section className="space-y-2">
+              <h2 className="capitalize text-xs font-semibold px-4">
+                main menu
+              </h2>
+              <nav className="grid font-semibold">{Links}</nav>
+            </section>
+            <Separator />
+            <footer className="space-y-2">
+              <h2 className="capitalize text-sm font-semibold">Others</h2>
+              <nav className="grid">
+                <NavLink href="/settings">settings</NavLink>
+              </nav>
+            </footer>
+          </section>
+          <main className="grow bg-stone-50 flex  flex-col">{children}</main>
+        </div>
+      </body>
     </html>
   );
 }

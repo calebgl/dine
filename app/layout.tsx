@@ -20,12 +20,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(inter.className, "h-dvh grid grid-cols-5")}>
-        <ScrollArea className="border-r border-r-stone-200 max-h-dvh">
+      <body
+        className={cn(
+          inter.className,
+          "h-dvh grid md:grid-cols-4 lg:grid-cols-5",
+        )}
+      >
+        <ScrollArea className="border-r border-r-stone-200 max-h-dvh hidden md:block">
           <Sidebar />
         </ScrollArea>
-        <ScrollArea className="col-span-4 bg-stone-50 h-full overflow-y-auto">
-          <main className="py-8 px-10 h-[100rem]">{children}</main>
+        <ScrollArea className="col-span-3 lg:col-span-4 bg-stone-50 h-full overflow-y-auto">
+          <main className="py-8 px-6 sm:px-10 space-y-8">{children}</main>
         </ScrollArea>
       </body>
     </html>

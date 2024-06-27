@@ -74,18 +74,3 @@
     @apply bg-background text-foreground;
   }
 }
-
-a.active::before {
-  content: " ";
-  height: 105%;
-  width: 0.25rem;
-  top: 50%;
-  transform: translateY(-50%);
-
-  @apply bg-purple-400 absolute right-auto rounded-r-md;
-}
-
-a.active {
-  @apply transition-colors relative bg-purple-300/30;
-}
-

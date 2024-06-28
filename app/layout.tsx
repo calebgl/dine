@@ -5,6 +5,9 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Sidebar from "@/components/sidebar";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Bell, Clock, Search } from "@/components/icons";
+import { Input } from "@/components/input-with-icon";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,14 +26,43 @@ export default function RootLayout({
       <body
         className={cn(
           inter.className,
-          "h-dvh grid md:grid-cols-4 lg:grid-cols-5",
+          "h-dvh grid md:grid-cols-4 lg:grid-cols-5 grid-rows-[auto,auto]",
         )}
       >
-        <ScrollArea className="border-r border-r-stone-200 max-h-dvh hidden md:block">
+        <ScrollArea className="border-r border-r-stone-200 max-h-dvh hidden md:block lg:row-span-full">
           <Sidebar />
         </ScrollArea>
-        <ScrollArea className="col-span-3 lg:col-span-4 bg-stone-50 h-full overflow-y-auto">
-          <main className="py-8 px-6 sm:px-10 space-y-8">{children}</main>
+        <header className="py-8 px-6 sm:px-10 space-y-4 h-fit col-span-3 lg:col-span-4 border-b border-stone-200 bg-stone-50">
+          <div className="flex gap-4 justify-end items-center">
+            <Bell />
+            <Clock />
+            <Input icon={Search} />
+          </div>
+          <div className="flex items-center justify-between">
+            <h2 className="text-3xl font-bold">Dashboard</h2>
+            <Tabs defaultValue="today">
+              <TabsList>
+                <TabsTrigger className="capitalize" value="Yesterday">
+                  yesterday
+                </TabsTrigger>
+                <TabsTrigger className="capitalize" value="today">
+                  today
+                </TabsTrigger>
+                <TabsTrigger className="capitalize" value="week">
+                  week
+                </TabsTrigger>
+                <TabsTrigger className="capitalize" value="month">
+                  month
+                </TabsTrigger>
+                <TabsTrigger className="capitalize" value="year">
+                  year
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
+        </header>
+        <ScrollArea className="col-span-3 lg:col-start-2 lg:col-span-4 bg-stone-50 h-full overflow-y-auto">
+          <main className="p-10 space-y-8 h-[100rem]">{children}</main>
         </ScrollArea>
       </body>
     </html>
